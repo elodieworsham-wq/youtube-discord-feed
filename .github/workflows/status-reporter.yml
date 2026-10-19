@@ -3,8 +3,10 @@ name: Sancho Systems Status Reporter
 
 on:
   workflow_run:
-    workflows: ["YouTube New Video Notifier"]
-    types: [completed]
+    workflows:
+      - "YouTube New Video Notifier"
+    types:
+      - completed
 
 permissions:
   actions: read
