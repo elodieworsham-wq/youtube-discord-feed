@@ -2,7 +2,9 @@
 name: YouTube New Video Notifier
 
 on:
-  # Runs every 30 minutes.
+  # Runs every 30 minutes. GitHub Actions requires this
+  # to be a literal cron string here — it can't be pulled from src/configs/config.js.
+  # All other configurable values live in that file instead.
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
@@ -12,7 +14,6 @@ permissions:
 
 concurrency:
   group: youtube-notify
-  cancel-in-progress: false
 
 jobs:
   fetch-and-notify:
@@ -59,7 +60,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: update last seen video state"
-
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+          git push
