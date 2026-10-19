@@ -1,7 +1,12 @@
 
 name: Sancho Systems Status Reporter
 
-'on': workflow_dispatch
+'on':
+  workflow_run:
+    workflows:
+      - "YouTube New Video Notifier"
+    types:
+      - completed
 
 permissions:
   actions: read
@@ -13,9 +18,9 @@ jobs:
       - name: Report workflow status to Discord
         env:
           WEBHOOK_URL: ${{ secrets.DISCORD_STATUS_WEBHOOK_URL }}
-          WORKFLOW_NAME: ${{ github.event.workflow_run.name || 'Manual test' }}
-          CONCLUSION: ${{ github.event.workflow_run.conclusion || 'success' }}
-          RUN_URL: ${{ github.event.workflow_run.html_url || github.server_url }}
+          WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
         run: |
           case "$CONCLUSION" in
             success) STATUS="[OK] SUCCESS" ;;
