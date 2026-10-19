@@ -6,7 +6,6 @@ on: workflow_dispatch
 permissions:
   actions: read
 
-
 jobs:
   notify:
     runs-on: ubuntu-latest
